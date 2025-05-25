@@ -138,7 +138,7 @@ public class shopController {
 
 
         System.out.println(user.getID());
-        if(!userService.hasPermission(user, UserRole.ADMIN)){
+        if(userService.hasPermission(user, UserRole.ADMIN)){
             List<Shop> shops = shopService.getAllShops();
             if (shops.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("msg", "❌ No shops found"));
@@ -165,7 +165,7 @@ public class shopController {
      *                 <br>Body: {"msg": "Unauthorized"}</li>
      *         </ul>
      */
-    @PutMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<?> createShop( @RequestHeader("Authorization") String token,
                             @RequestParam String name,
                             @RequestParam String description) {

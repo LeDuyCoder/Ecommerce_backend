@@ -28,6 +28,7 @@ public class Products {
     private String description;
     private double price;
     private int stock;
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
     private int sold;
     private String createdAt;

@@ -135,7 +135,7 @@ public class userController {
 
         try {
             User user = userService.findByEmail(email).orElseThrow();
-            if (userService.hasPermission(user, UserRole.ADMIN)) {
+            if (!userService.hasPermission(user, UserRole.ADMIN)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
                         .body(Map.of("state", "fail", "msg", "❌ You do not have permission to delete users"));
             }
@@ -184,7 +184,7 @@ public class userController {
         try {
             User userAdmin = userService.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
-            if (userService.hasPermission(userAdmin, UserRole.ADMIN)) {
+            if (!userService.hasPermission(userAdmin, UserRole.ADMIN)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
                         .body(Map.of("state", "fail", "msg", "❌ You do not have permission to access"));
             }
@@ -218,7 +218,7 @@ public class userController {
         try {
             User userAdmin = userService.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
-            if (userService.hasPermission(userAdmin, UserRole.ADMIN)) {
+            if (!userService.hasPermission(userAdmin, UserRole.ADMIN)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
                         .body(Map.of("state", "fail", "msg", "❌ You do not have permission to access"));
             }

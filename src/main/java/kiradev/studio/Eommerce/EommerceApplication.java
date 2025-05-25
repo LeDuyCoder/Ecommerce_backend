@@ -25,7 +25,7 @@ public class EommerceApplication {
 	@Bean
 	CommandLineRunner runner(ProductService productService){
 		return args -> {
-			//addProducts(productService);
+			addProducts(productService);
 		};
 	}
 
@@ -40,7 +40,7 @@ public class EommerceApplication {
 	}
 
 	public void addProducts(ProductService productService) {
-		for (int i = 1; i <= 50; i++) {
+		for (int i = 1; i <= 200; i++) {
 			Products product = new Products();
 			product.setName("Product " + i);
 			product.setDescription("Description for Product " + i);

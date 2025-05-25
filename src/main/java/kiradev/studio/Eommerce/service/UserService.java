@@ -183,7 +183,7 @@ public class UserService implements IUserService {
      * @return true if the user has the specified role, false otherwise
      */
     public boolean hasPermission(User user, UserRole role) {
-        return user.getRole() != role;
+        return user.getRole() == role;
     }
 
     /**
