@@ -50,8 +50,14 @@ public class categoriesController {
         return ResponseEntity.ok(email);
     }
 
-
-    //write api create category
+    /**
+     * Creates a new category.
+     *
+     * @param token       the JWT token for authentication
+     * @param name        the name of the category
+     * @param description a brief description of the category
+     * @return ResponseEntity with success or error message
+     */
     @PostMapping("/createCategory")
     public ResponseEntity<?> createCategory(
             @RequestHeader("Authorization") String token,
@@ -69,7 +75,15 @@ public class categoriesController {
         }
     }
 
-    //write api update category
+    /**
+     * Updates an existing category.
+     *
+     * @param token       the JWT token for authentication
+     * @param categoryId  the UUID of the category to update
+     * @param name        the new name for the category (optional)
+     * @param description the new description for the category (optional)
+     * @return ResponseEntity with success or error message
+     */
     @PutMapping("/updateCategory")
     public ResponseEntity<?> updateCategory(
             @RequestHeader("Authorization") String token,
@@ -90,7 +104,13 @@ public class categoriesController {
         }
     }
 
-    //write api delete category
+    /**
+     * Deletes a category by its ID.
+     *
+     * @param token      the JWT token for authentication
+     * @param categoryId the UUID of the category to delete
+     * @return ResponseEntity with success or error message
+     */
     @DeleteMapping("/deleteCategory")
     public ResponseEntity<?> deleteCategory(
             @RequestHeader("Authorization") String token,
@@ -109,7 +129,13 @@ public class categoriesController {
         }
     }
 
-    //write api get category by name
+    /**
+     * Retrieves a category by its ID.
+     *
+     * @param token       the JWT token for authentication
+     * @param name        the name of the category to retrieve
+     * @return ResponseEntity with the category data or an error message
+     */
     @GetMapping("/getCategoryByName")
     public ResponseEntity<?> getCategoryByName(
             @RequestHeader("Authorization") String token,
@@ -126,7 +152,12 @@ public class categoriesController {
         }
     }
 
-    //write api get category all
+    /**
+     * Retrieves all categories.
+     *
+     * @param token the JWT token for authentication
+     * @return ResponseEntity with the list of categories or an error message
+     */
     @GetMapping("/getAllCategories")
     public ResponseEntity<?> getAllCategories(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);
@@ -147,7 +178,13 @@ public class categoriesController {
         }
     }
 
-    //write api get products by category
+    /**
+     * Retrieves products by category name.
+     *
+     * @param token        the JWT token for authentication
+     * @param categoryName the name of the category to retrieve products from
+     * @return ResponseEntity with the list of products in the specified category or an error message
+     */
     @GetMapping("/getProductsByCategory")
     public ResponseEntity<?> getProductsByCategory(
             @RequestHeader("Authorization") String token,
