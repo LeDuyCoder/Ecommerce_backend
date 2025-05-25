@@ -2,6 +2,7 @@ package kiradev.studio.Eommerce.controller;
 
 
 import kiradev.studio.Eommerce.Enum.UserRole;
+import kiradev.studio.Eommerce.entity.Category;
 import kiradev.studio.Eommerce.entity.User;
 import kiradev.studio.Eommerce.service.CategoryService;
 import kiradev.studio.Eommerce.service.UserService;
@@ -64,7 +65,7 @@ public class categoriesController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("state", "fail", "msg", "❌ " + e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("state", "fail", "msg", "❌ An error occurred while creating the category"));
+            return ResponseEntity.status(500).body(Map.of("state", "fail", "msg", "❌ " + e.getMessage()));
         }
     }
 
@@ -143,6 +144,31 @@ public class categoriesController {
             return ResponseEntity.ok(Map.of("data", categoryService.getAllCategories()));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("state", "fail", "msg", "❌ An error occurred while retrieving all categories"));
+        }
+    }
+
+    //write api get products by category
+    @GetMapping("/getProductsByCategory")
+    public ResponseEntity<?> getProductsByCategory(
+            @RequestHeader("Authorization") String token,
+            @RequestParam String categoryName) {
+        ResponseEntity<?> validation = validateToken(token);
+        if (!validation.getStatusCode().is2xxSuccessful()) return validation;
+
+        try {
+
+            Category category = categoryService.getCategoryByName(categoryName);
+            if (category==null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("state", "fail", "msg", "❌ Category not found"));
+            }else{
+                return ResponseEntity.ok(Map.of("state", "fail", "data", categoryService.getProductsByCategoryName(categoryName)));
+            }
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("state", "fail", "msg", "❌ " + e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("state", "fail", "msg", "❌ An error occurred while retrieving products by category"));
         }
     }
 

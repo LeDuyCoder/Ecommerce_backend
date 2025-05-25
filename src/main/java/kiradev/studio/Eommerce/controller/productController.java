@@ -3,6 +3,7 @@ package kiradev.studio.Eommerce.controller;
 import kiradev.studio.Eommerce.Enum.ProductStatus;
 import kiradev.studio.Eommerce.Enum.UserRole;
 import kiradev.studio.Eommerce.dto.ProductDTO;
+import kiradev.studio.Eommerce.entity.Category;
 import kiradev.studio.Eommerce.service.ProductService;
 import kiradev.studio.Eommerce.service.ShopService;
 import kiradev.studio.Eommerce.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -149,7 +151,7 @@ public class productController {
      */
     @PostMapping("/createProduct")
     public ResponseEntity<?> createProduct(@RequestHeader("Authorization") String token,
-                                           @RequestParam ProductDTO productDTO) {
+                                           @RequestBody ProductDTO productDTO) {
         ResponseEntity<?> validation = validateToken(token);
         if (!validation.getStatusCode().is2xxSuccessful()) {
             return validation;
@@ -164,7 +166,7 @@ public class productController {
                     .body(Map.of("state", "fail", "msg", "❌ You do not have permission to create a product"));
         }
 
-        productService.createProduct(productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getStock(), null, user.getID());
+        productService.createProduct(productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getStock(), null, user.getID(), productDTO.getCategories());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Map.of("state", "success", "msg", "✅ Product created successfully"));
     }
@@ -283,5 +285,28 @@ public class productController {
 
         productService.updateProductStatus(productId, status);
         return ResponseEntity.ok(Map.of("state", "success", "msg", "✅ Product status updated successfully"));
+    }
+
+
+    //write api get all categories of product
+    @GetMapping("/getAllCategories")
+    public ResponseEntity<?> getAllCategories(
+            @RequestHeader("Authorization") String token,
+            @RequestParam UUID productID
+    ) {
+        ResponseEntity<?> validation = validateToken(token);
+        if (!validation.getStatusCode().is2xxSuccessful()) {
+            return validation;
+        }
+
+        List<Category> categoryList = productService.getAllCategoriesByProductId(productID);
+        if (categoryList.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("state", "fail", "msg", "❌ No categories found for this product"));
+        }
+        return ResponseEntity.ok(Map.of(
+                "state", "success",
+                "data", categoryList
+        ));
     }
 }

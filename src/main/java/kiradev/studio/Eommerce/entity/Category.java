@@ -1,11 +1,13 @@
 package kiradev.studio.Eommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,4 +24,7 @@ public class Category {
     private String name;
     @Column(nullable = false)
     private String description;
+    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    private List<Products> products;
 }

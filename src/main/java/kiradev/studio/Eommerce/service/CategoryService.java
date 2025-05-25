@@ -1,6 +1,7 @@
 package kiradev.studio.Eommerce.service;
 
 import kiradev.studio.Eommerce.entity.Category;
+import kiradev.studio.Eommerce.entity.Products;
 import kiradev.studio.Eommerce.repository.CategoryRepository;
 import kiradev.studio.Eommerce.service.Interface.ICategories;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,13 @@ public class CategoryService implements ICategories {
             throw new IllegalArgumentException("No categories found.");
         }
         return categories;
+    }
+
+    public List<Products> getProductsByCategoryName(String categoryName) {
+        Category category = categoryRepository.findByname(categoryName);
+        if (category == null) {
+            throw new IllegalArgumentException("Category with name " + categoryName + " does not exist.");
+        }
+        return category.getProducts();
     }
 }
