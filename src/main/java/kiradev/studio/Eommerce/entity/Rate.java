@@ -24,7 +24,6 @@ public class Rate {
     private UUID productId;
     @Column(nullable = false)
     private int rate;
-    @Column(nullable = false)
     private String comment;
     @Column(nullable = false)
     private String createdAt;
