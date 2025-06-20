@@ -20,6 +20,7 @@ import java.util.UUID;
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "productID")
     private UUID productID;
     @Column(nullable = false)
     private UUID shopID;
