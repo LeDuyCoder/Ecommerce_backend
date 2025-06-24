@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IOrderService {
-    void createOrder(User user, PaymentMethod paymentMethod, OrderStatus status, float priceTotal);
-    void updateOrder(UUID orderId, OrderStatus status);
+    void createOrder(User user, float priceTotal);
     void deleteOrder(UUID orderId);
     Order getOrderById(UUID orderId);
     List<Order> getAllOrdersByUserId(UUID userId);

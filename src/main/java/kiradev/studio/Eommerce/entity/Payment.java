@@ -2,6 +2,9 @@ package kiradev.studio.Eommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import kiradev.studio.Eommerce.Enum.OrderStatus;
+import kiradev.studio.Eommerce.Enum.PaymentMethod;
+import kiradev.studio.Eommerce.Enum.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,13 +12,13 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "orderitems")
-public class OrderItem {
+@Table(name = "payments")
+public class Payment {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private UUID id;
@@ -25,14 +28,11 @@ public class OrderItem {
     @JsonIgnore
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "productID", referencedColumnName = "productID", nullable = false)
-    @JsonIgnore
-    private Products products;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
 
-    @Column(nullable = false, columnDefinition = "int default 1")
-    private int quantity;
-    @Column(nullable = false)
-    private double price;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
+    private String created_at;
 }

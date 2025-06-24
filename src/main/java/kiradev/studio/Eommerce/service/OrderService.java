@@ -27,30 +27,23 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void createOrder(User user, PaymentMethod paymentMethod, OrderStatus status, float totalPrice) {
+    public void createOrder(User user, float totalPrice) {
         Order order = new Order();
         order.setUser(user);
         order.setTotalPrice(totalPrice);
-        order.setPaymentMethod(paymentMethod);
-        order.setStatus(status);
+        order.setOrderStatus(OrderStatus.PENDING);
         order.setCreated_at(Instant.now().toString());
 
         orderRepository.save(order);
     }
 
-    /**
-     * Updates the status of an existing order identified by its ID.
-     *
-     * @param orderId The UUID of the order to be updated.
-     * @param status  The new status to set for the order.
-     */
-    @Override
-    public void updateOrder(UUID orderId, OrderStatus status) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Order with ID " + orderId + " does not exist."));
-        order.setStatus(status);
-
+    public void updateOrderStatus(UUID orderId, OrderStatus status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order with ID " + orderId + " does not exist."));
+        order.setOrderStatus(status);
         orderRepository.save(order);
     }
+
 
     /**
      * Deletes an order identified by its ID.

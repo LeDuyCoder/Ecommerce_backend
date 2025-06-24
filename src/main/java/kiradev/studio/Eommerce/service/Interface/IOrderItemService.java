@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IOrderItemService {
-    void addItemToOrder(Order order, Products products, int quantity, float singlePrice);
+    void addItemToOrder(Order order, Products products, int quantity, double singlePrice);
     void updateItemQuantityInOrder(Order order, Products products, int quantity);
     void removeItemFromOrder(Order order, Products products);
     void clearOrderItems(Order order);

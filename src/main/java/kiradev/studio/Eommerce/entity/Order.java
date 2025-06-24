@@ -32,10 +32,7 @@ public class Order {
     private float totalPrice;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
+    private OrderStatus orderStatus;
 
     @Column(nullable = false)
     private String created_at;

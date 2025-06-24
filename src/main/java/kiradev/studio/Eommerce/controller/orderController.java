@@ -1,8 +1,6 @@
 package kiradev.studio.Eommerce.controller;
 
-import kiradev.studio.Eommerce.Enum.OrderStatus;
 import kiradev.studio.Eommerce.Enum.UserRole;
-import kiradev.studio.Eommerce.dto.OrderDTO;
 import kiradev.studio.Eommerce.entity.User;
 import kiradev.studio.Eommerce.service.OrderService;
 import kiradev.studio.Eommerce.service.UserService;
@@ -44,9 +42,9 @@ public class orderController {
         return ResponseEntity.ok(email);
     }
 
-    @PutMapping("/createOrder")
+    @PostMapping("/createOrder")
     public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String token,
-                                         @RequestBody OrderDTO orderDTO
+                                         @RequestParam(required = false) Float totalPrice
     ) {
         ResponseEntity<?> validation = validateToken(token);
         if (!validation.getStatusCode().is2xxSuccessful()) return validation;
@@ -54,7 +52,7 @@ public class orderController {
 
         try {
             User user = userService.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-            orderService.createOrder(user, orderDTO.getPaymentMethod(), orderDTO.getOrderStatus(), orderDTO.getTotalPrice());
+            orderService.createOrder(user, totalPrice == null ? 0 : totalPrice);
             return ResponseEntity.ok(Map.of("state", "success", "msg", "Order created successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -103,23 +101,6 @@ public class orderController {
             User user = userService.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("User not found"));
             return ResponseEntity.ok(Map.of("state", "success", "data", orderService.getAllOrdersByUser(user)));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("state", "fail", "msg", "❌ " + e.getMessage()));
-        }
-    }
-
-    @PutMapping("/updateOrderStatus")
-    public ResponseEntity<?> updateOrderStatus(@RequestHeader("Authorization") String token,
-                                               @RequestParam UUID orderId,
-                                               @RequestParam OrderStatus status) {
-        ResponseEntity<?> validation = validateToken(token);
-        if (!validation.getStatusCode().is2xxSuccessful()) return validation;
-        String email = (String) validation.getBody();
-
-        try {
-            orderService.updateOrder(orderId, status);
-            return ResponseEntity.ok(Map.of("state", "success", "msg", "Order status updated"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("state", "fail", "msg", "❌ " + e.getMessage()));
