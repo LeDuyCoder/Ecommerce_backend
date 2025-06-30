@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("/api/bank")
 public class bankController {
@@ -27,6 +28,13 @@ public class bankController {
         this.jwtUtil = jwtUtil;
     }
 
+    //write documentation for this controller
+    /**
+     * Validates the JWT token from the request header.
+     *
+     * @param token The JWT token from the request header.
+     * @return ResponseEntity containing the email if valid, or an error message if invalid.
+     */
     private ResponseEntity<?> validateToken(String token) {
         if (token == null || !token.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -44,7 +52,13 @@ public class bankController {
         return ResponseEntity.ok(email);
     }
 
-    //write api add bank
+    /**
+     * Adds a new bank account for the authenticated user.
+     *
+     * @param token The JWT token from the request header.
+     * @param bankDTO The bank account details to be added.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @PutMapping("/addBank")
     public ResponseEntity<?> addBank(@RequestHeader("Authorization") String token,
                                      @RequestBody BankDTO bankDTO) {
@@ -73,7 +87,13 @@ public class bankController {
         }
     }
 
-    //write api get banks
+
+    /**
+     * Retrieves the bank account details for the authenticated user.
+     *
+     * @param token The JWT token from the request header.
+     * @return ResponseEntity containing the bank account details or an error message.
+     */
     @GetMapping("/getBank")
     public ResponseEntity<?> getBank(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);
@@ -88,7 +108,15 @@ public class bankController {
         }
     }
 
-    //write api delete bank
+
+    /**
+     * Deletes a bank account for the authenticated user.
+     *
+     * @param token The JWT token from the request header.
+     * @param owner The owner of the bank account to be deleted.
+     * @param numberCard The card number of the bank account to be deleted.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @DeleteMapping("/deleteBank")
     public ResponseEntity<?> deleteBank(@RequestHeader("Authorization") String token,
                         @RequestParam String owner,

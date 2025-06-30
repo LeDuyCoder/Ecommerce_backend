@@ -33,6 +33,12 @@ public class cartItemController {
         this.productService = productService;
     }
 
+    /**
+     * Validates the JWT token and extracts the user's email.
+     *
+     * @param token The JWT token from the request header.
+     * @return A ResponseEntity containing the user's email or an error message.
+     */
     private ResponseEntity<?> validateToken(String token) {
         if (token == null || !token.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -50,6 +56,13 @@ public class cartItemController {
         return ResponseEntity.ok(email);
     }
 
+    /**
+     * Adds an item to the user's cart.
+     *
+     * @param token   The JWT token for authentication.
+     * @param request The request body containing product ID and quantity.
+     * @return A ResponseEntity indicating success or failure.
+     */
     @PutMapping("/addCartItem")
     public ResponseEntity<?> addCartItem(
             @RequestHeader("Authorization") String token,
@@ -84,6 +97,12 @@ public class cartItemController {
         }
     }
 
+    /**
+     * Retrieves the cart for the authenticated user.
+     *
+     * @param token The JWT token for authentication.
+     * @return A ResponseEntity containing the cart data or an error message.
+     */
     @GetMapping("/getCartItems")
     public ResponseEntity<?> getCartItems(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);
@@ -106,6 +125,13 @@ public class cartItemController {
         }
     }
 
+    /**
+     * Removes an item from the user's cart.
+     *
+     * @param token     The JWT token for authentication.
+     * @param productId The ID of the product to remove.
+     * @return A ResponseEntity indicating success or failure.
+     */
     @DeleteMapping("/removeCartItem")
     public ResponseEntity<?> removeCartItem(
             @RequestHeader("Authorization") String token,
@@ -134,6 +160,13 @@ public class cartItemController {
         }
     }
 
+    /**
+     * Clears the user's cart.
+     *
+     * @param token The JWT token for authentication.
+     * @param cart  The cart to clear.
+     * @return A ResponseEntity indicating success or failure.
+     */
     @DeleteMapping("/clearCart")
     public ResponseEntity<?> clearCart(
             @RequestHeader("Authorization") String token,

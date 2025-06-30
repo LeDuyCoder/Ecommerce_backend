@@ -42,6 +42,13 @@ public class orderController {
         return ResponseEntity.ok(email);
     }
 
+    /**
+     * Creates a new order for the authenticated user.
+     *
+     * @param token      The JWT token for authentication.
+     * @param totalPrice The total price of the order (optional).
+     * @return A ResponseEntity containing the result of the operation.
+     */
     @PostMapping("/createOrder")
     public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String token,
                                          @RequestParam(required = false) Float totalPrice
@@ -60,6 +67,13 @@ public class orderController {
         }
     }
 
+    /**
+     * Retrieves an order by its ID.
+     *
+     * @param token   The JWT token for authentication.
+     * @param orderId The ID of the order to retrieve.
+     * @return A ResponseEntity containing the order data or an error message.
+     */
     @GetMapping("/getOrderById")
     public ResponseEntity<?> getOrderById(@RequestHeader("Authorization") String token,
                                           @RequestParam UUID orderId) {
@@ -75,6 +89,14 @@ public class orderController {
         }
     }
 
+    //write documentation for deleteOrder method
+    /**
+     * Deletes an order by its ID.
+     *
+     * @param token   The JWT token for authentication.
+     * @param orderId The ID of the order to delete.
+     * @return A ResponseEntity indicating success or failure of the deletion operation.
+     */
     @DeleteMapping("/deleteOrder")
     public ResponseEntity<?> deleteOrder(@RequestHeader("Authorization") String token,
                                          @PathVariable UUID orderId) {
@@ -91,6 +113,12 @@ public class orderController {
         }
     }
 
+    /**
+     * Retrieves all orders for the authenticated user.
+     *
+     * @param token The JWT token for authentication.
+     * @return A ResponseEntity containing the list of orders or an error message.
+     */
     @GetMapping("/getOrdersByUser")
     public ResponseEntity<?> getOrdersByUser(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);
@@ -107,6 +135,12 @@ public class orderController {
         }
     }
 
+    /**
+     * Retrieves all orders for admin users.
+     *
+     * @param token The JWT token for authentication.
+     * @return A ResponseEntity containing the list of all orders or an error message.
+     */
     @GetMapping("/getAllOrders")
     public ResponseEntity<?> getAllOrders(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);

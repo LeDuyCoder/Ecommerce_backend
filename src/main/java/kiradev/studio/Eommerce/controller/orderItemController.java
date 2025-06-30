@@ -47,6 +47,13 @@ public class orderItemController {
         return ResponseEntity.ok(email);
     }
 
+    /**
+     * Adds an order item to an existing order.
+     *
+     * @param token        The JWT token for authentication.
+     * @param orderItemDTO The DTO containing order item details.
+     * @return A ResponseEntity indicating success or failure.
+     */
     @PutMapping("/addOrderItem")
     public ResponseEntity<?> addOrderItem(
             @RequestHeader("Authorization") String token,
@@ -76,6 +83,13 @@ public class orderItemController {
         }
     }
 
+    /**
+     * Adds multiple order items to an existing order.
+     *
+     * @param token          The JWT token for authentication.
+     * @param orderItemDTOs  The list of DTOs containing order item details.
+     * @return A ResponseEntity indicating success or failure.
+     */
     @PutMapping("/addListOrderItem")
     public ResponseEntity<?> addListOrderItem(
             @RequestHeader("Authorization") String token,
@@ -129,6 +143,13 @@ public class orderItemController {
     }
 
 
+    /**
+     * Retrieves order items by order ID.
+     *
+     * @param token   The JWT token for authentication.
+     * @param orderId The ID of the order to retrieve items for.
+     * @return A ResponseEntity containing the list of order items or an error message.
+     */
     @GetMapping("/order/{orderId}")
     public ResponseEntity<?> getOrderItemsByOrderId(
             @RequestHeader("Authorization") String token,
@@ -147,6 +168,13 @@ public class orderItemController {
         }
     }
 
+    /**
+     * Retrieves an order item by its ID.
+     *
+     * @param token        The JWT token for authentication.
+     * @param orderItemId  The ID of the order item to retrieve.
+     * @return A ResponseEntity containing the order item or an error message.
+     */
     @GetMapping("/getOrderItemById/{orderItemId}")
     public ResponseEntity<?> getOrderItemById(
             @RequestHeader("Authorization") String token,
@@ -168,6 +196,13 @@ public class orderItemController {
         }
     }
 
+    /**
+     * Deletes all order items from an order.
+     *
+     * @param token The JWT token for authentication.
+     * @param id    The ID of the order from which to delete items.
+     * @return A ResponseEntity indicating success or failure of the deletion operation.
+     */
     @DeleteMapping("/removeOrderItem/{id}")
     public ResponseEntity<?> deleteOrderItemAll(
             @RequestHeader("Authorization") String token,
@@ -191,6 +226,13 @@ public class orderItemController {
         }
     }
 
+    /**
+     * Removes a specific item from an order.
+     *
+     * @param token        The JWT token for authentication.
+     * @param orderItemDTO The DTO containing order item details to be removed.
+     * @return A ResponseEntity indicating success or failure of the removal operation.
+     */
     @DeleteMapping("/removeItemInOrderItem")
     public ResponseEntity<?> removeItemInOrderItem(
             @RequestHeader("Authorization") String token,
@@ -214,6 +256,13 @@ public class orderItemController {
         }
     }
 
+    /**
+     * Updates the quantity of an order item in an order.
+     *
+     * @param token The JWT token for authentication.
+     * @param dto   The DTO containing order item details to be updated.
+     * @return A ResponseEntity indicating success or failure of the update operation.
+     */
     @PutMapping("/updateQuantity")
     public ResponseEntity<?> updateOrderItemQuantity(
             @RequestHeader("Authorization") String token,

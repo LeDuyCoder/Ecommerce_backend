@@ -43,6 +43,13 @@ public class cartController {
         return ResponseEntity.ok(email);
     }
 
+    //write doumentation for this method getCart
+    /**
+     * Retrieves the cart for the authenticated user.
+     *
+     * @param token The JWT token for authentication.
+     * @return A ResponseEntity containing the cart data or an error message.
+     */
     @GetMapping("/getCart")
     public ResponseEntity<?> getCart(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);
@@ -63,6 +70,12 @@ public class cartController {
         }
     }
 
+    /**
+     * Creates a new cart for the authenticated user.
+     *
+     * @param token The JWT token for authentication.
+     * @return A ResponseEntity indicating the success or failure of the cart creation.
+     */
     @PutMapping("/createCart")
     public ResponseEntity<?> createCart(@RequestHeader("Authorization") String token){
         ResponseEntity<?> validation = validateToken(token);
@@ -81,6 +94,12 @@ public class cartController {
         }
     }
 
+    /**
+     * Deletes the cart for the authenticated user.
+     *
+     * @param token The JWT token for authentication.
+     * @return A ResponseEntity indicating the success or failure of the cart deletion.
+     */
     @GetMapping("/getAllCarts")
     public ResponseEntity<?> getAllCarts(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);
@@ -101,6 +120,13 @@ public class cartController {
         }
     }
 
+    /**
+     * Deletes the cart for a specific user by email.
+     *
+     * @param token The JWT token for authentication.
+     * @param mail  The email of the user whose cart is to be deleted.
+     * @return A ResponseEntity indicating the success or failure of the cart deletion.
+     */
     @DeleteMapping("/deteleCarts")
     public ResponseEntity<?> deleteCarts(
             @RequestHeader("Authorization") String token,

@@ -26,6 +26,12 @@ public class OrderService implements IOrderService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Creates a new order for a user with the specified total price.
+     *
+     * @param user       The user for whom the order is created.
+     * @param totalPrice The total price of the order.
+     */
     @Override
     public void createOrder(User user, float totalPrice) {
         Order order = new Order();
@@ -37,6 +43,13 @@ public class OrderService implements IOrderService {
         orderRepository.save(order);
     }
 
+    /**
+     * Updates the status of an existing order identified by its ID.
+     *
+     * @param orderId The UUID of the order to be updated.
+     * @param status  The new status to set for the order.
+     * @throws IllegalArgumentException if the order with the given ID does not exist.
+     */
     public void updateOrderStatus(UUID orderId, OrderStatus status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order with ID " + orderId + " does not exist."));

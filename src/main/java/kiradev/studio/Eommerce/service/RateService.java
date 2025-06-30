@@ -27,6 +27,14 @@ public class RateService implements IRateService {
     }
 
 
+    /**
+     * Adds a rate for a product by a user.
+     *
+     * @param userId    The ID of the user adding the rate.
+     * @param productId The ID of the product being rated.
+     * @param rate      The rating value (1 to 5).
+     * @param comment   An optional comment for the rating.
+     */
     @Override
     public void addRate(UUID userId, UUID productId, int rate, String comment) {
         if(userRepository.existsById(userId) && productRepository.existsById(productId)) {
@@ -51,6 +59,14 @@ public class RateService implements IRateService {
         }
     }
 
+    /**
+     * Updates an existing rate for a product by a user.
+     *
+     * @param userId    The ID of the user updating the rate.
+     * @param productId The ID of the product being rated.
+     * @param rate      The new rating value (1 to 5).
+     * @param comment   An optional new comment for the rating.
+     */
     @Override
     public void updateRate(UUID userId, UUID productId, int rate, String comment) {
         if (userRepository.existsById(userId) && productRepository.existsById(productId)) {
@@ -71,6 +87,12 @@ public class RateService implements IRateService {
         }
     }
 
+    /**
+     * Deletes a rate for a product by a user.
+     *
+     * @param userId    The ID of the user whose rate is to be deleted.
+     * @param productId The ID of the product whose rate is to be deleted.
+     */
     @Override
     public void deleteRate(UUID userId, UUID productId) {
         if (userRepository.existsById(userId) && productRepository.existsById(productId)) {
@@ -86,6 +108,12 @@ public class RateService implements IRateService {
         }
     }
 
+    /**
+     * Retrieves the average rating for a product.
+     *
+     * @param productId The ID of the product for which to calculate the average rating.
+     * @return The average rating, or 0.0 if no ratings are available.
+     */
     @Override
     public double getAverageRate(UUID productId) {
         List<Rate> listRates = rateRepository.findByproductId(productId);
@@ -101,15 +129,34 @@ public class RateService implements IRateService {
         return totalRate / listRates.size();
     }
 
+    /**
+     * Retrieves the total number of rates for a product.
+     *
+     * @param productId The ID of the product for which to count the rates.
+     * @return The total number of rates for the product.
+     */
     @Override
     public int getTotalRates(UUID productId) {
         return rateRepository.findByproductId(productId).size();
     }
 
+    /**
+     * Retrieves all rates for a specific product.
+     *
+     * @param productId The ID of the product for which to retrieve rates.
+     * @return A list of Rate objects associated with the product.
+     */
     public List<Rate> getAllRatesByProductId(UUID productId) {
         return rateRepository.findByproductId(productId);
     }
 
+    /**
+     * Retrieves a specific rate by user ID and product ID.
+     *
+     * @param userId    The ID of the user who rated the product.
+     * @param productId The ID of the product that was rated.
+     * @return The Rate object if found, or null if not found.
+     */
     public Rate getRateByUserIdAndProductId(UUID userId, UUID productId) {
         return rateRepository.findByUserIdAndProductId(userId, productId);
     }

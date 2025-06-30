@@ -56,6 +56,12 @@ public class paymentController {
         return ResponseEntity.ok(email);
     }
 
+    /**
+     * Validates the JWT token and checks if the user has admin permissions.
+     *
+     * @param token The JWT token from the request header.
+     * @return A ResponseEntity containing the user's email or an error message.
+     */
     @PostMapping("/createPayment")
     public ResponseEntity<?> createPayment(
             @RequestHeader("Authorization") String token,
@@ -75,7 +81,13 @@ public class paymentController {
                     .body(Map.of("state", "fail", "msg", "❌ " + e.getMessage()));
         }
     }
-
+    /**
+     * Retrieves a payment by its ID.
+     *
+     * @param token The JWT token from the request header.
+     * @param paymentId The ID of the payment to retrieve.
+     * @return ResponseEntity containing the payment data or an error message.
+     */
     @GetMapping("/getPaymentById/{paymentId}")
     public ResponseEntity<?> getPaymentById(
             @RequestHeader("Authorization") String token,
@@ -93,6 +105,13 @@ public class paymentController {
         }
     }
 
+    /**
+     * Retrieves the payment details for a specific order.
+     *
+     * @param token The JWT token from the request header.
+     * @param orderId The ID of the order for which to retrieve payment details.
+     * @return ResponseEntity containing the payment details or an error message.
+     */
     @GetMapping("/getPaymentByOrderId")
     public ResponseEntity<?> getPaymentByOrderId(
             @RequestHeader("Authorization") String token,
@@ -111,6 +130,14 @@ public class paymentController {
         }
     }
 
+    /**
+     * Retrieves all payments with pagination.
+     *
+     * @param token The JWT token from the request header.
+     * @param page The page number to retrieve.
+     * @param size The number of items per page.
+     * @return ResponseEntity containing the paginated payment data or an error message.
+     */
     @GetMapping("/allPaged")
     public ResponseEntity<?> getAllPaymentsPaged(
             @RequestHeader("Authorization") String token,
@@ -140,6 +167,14 @@ public class paymentController {
     }
 
 
+    /**
+     * Updates the payment status for a specific order.
+     *
+     * @param token The JWT token from the request header.
+     * @param orderId The ID of the order for which to update the payment status.
+     * @param paymentStatus The new payment status to set.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @PutMapping("/updatePaymentStatus")
     public ResponseEntity<?> updatePaymentStatus(
             @RequestHeader("Authorization") String token,
@@ -160,6 +195,14 @@ public class paymentController {
         }
     }
 
+    /**
+     * Updates the payment method for a specific order.
+     *
+     * @param token The JWT token from the request header.
+     * @param orderId The ID of the order for which to update the payment method.
+     * @param paymentMethod The new payment method to set.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @PutMapping("/updatePaymentMethod")
     public ResponseEntity<?> updatePaymentMethod(
             @RequestHeader("Authorization") String token,
@@ -180,6 +223,13 @@ public class paymentController {
         }
     }
 
+    /**
+     * Deletes a payment for a specific order.
+     *
+     * @param token The JWT token from the request header.
+     * @param orderId The ID of the order for which to delete the payment.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @DeleteMapping("/deletePayment")
     public ResponseEntity<?> deletePayment(
             @RequestHeader("Authorization") String token,
@@ -199,6 +249,12 @@ public class paymentController {
         }
     }
 
+    /**
+     * Retrieves all payments for admin users.
+     *
+     * @param token The JWT token for authentication.
+     * @return A ResponseEntity containing the list of all payments or an error message.
+     */
     @GetMapping("/getAllPayments")
     public ResponseEntity<?> getAllPayments(@RequestHeader("Authorization") String token) {
         ResponseEntity<?> validation = validateToken(token);
